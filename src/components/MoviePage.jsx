@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import axios from "axios";
-
+import "./MoviePage.css";
 const tmdb = axios.create({
   baseURL: "https://api.themoviedb.org/3",
   params: {
@@ -10,26 +10,62 @@ const tmdb = axios.create({
 
 const MoviePage = () => {
   const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const fetchingRef = useRef(false);
 
   useEffect(() => {
     const fetchMovies = async () => {
+      if (loading || !hasMore) return;
+      if (fetchingRef.current) return;
       try {
-        const response = await tmdb.get("/movie/popular");
-        setMovies(response.data.results);
-        setLoading(false);
+        fetchingRef.current = true;
+        setLoading(true);
+        const response = await tmdb.get("/trending/movie/day", {
+          params: { page },
+        });
+        const newMovies = response.data.results;
+        setMovies((prevMovies) => {
+          const existIds = new Set(prevMovies.map((m) => m.id));
+          const filteredMovies = newMovies.filter(
+            (movie) => !existIds.has(movie.id),
+          );
+          return [...prevMovies, ...filteredMovies];
+        });
+
+        if (response.data.total_pages && page >= response.data.total_pages) {
+          setHasMore(false);
+        }
       } catch (error) {
         setError(error.message);
+      } finally {
         setLoading(false);
+        fetchingRef.current = false;
       }
     };
     fetchMovies();
-  }, []);
+  }, [page, hasMore]);
+
+  const handleScroll = useCallback(() => {
+    if (loading || !hasMore) return;
+    const scrollPosition = window.innerHeight + window.scrollY;
+    const threshold = document.documentElement.offsetHeight - 200;
+    if (scrollPosition >= threshold) {
+      setPage((prevPage) => prevPage + 1);
+    }
+  }, [loading, hasMore]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [handleScroll]);
+
   return (
     <div>
       <div className="main-container">
-        <h1>Home Page</h1>
+        <h1>Movies Page</h1>
       </div>
       <div className="message-container">
         {loading && <p>Loading...</p>}

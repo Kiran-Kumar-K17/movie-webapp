@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./HomePage.css";
 
@@ -10,53 +10,123 @@ const tmdb = axios.create({
 });
 
 const HomePage = () => {
-  const [movies, setMovies] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [trendingMovies, setTrendingMovies] = useState([]);
+  const [trendingTV, setTrendingTV] = useState([]);
+
+  const movieRef = useRef(null);
+  const tvRef = useRef(null);
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchData = async () => {
       try {
-        const response = await tmdb.get("/trending/movie/day");
-        setMovies(response.data.results);
-        setLoading(false);
+        setLoading(true);
+
+        const movieRes = await tmdb.get("/trending/movie/day");
+        const tvRes = await tmdb.get("/trending/tv/day");
+
+        setTrendingMovies(movieRes.data.results);
+        setTrendingTV(tvRes.data.results);
       } catch (error) {
         setError(error.message);
+      } finally {
         setLoading(false);
       }
     };
-    fetchMovies();
+
+    fetchData();
   }, []);
+
   return (
-    <div>
-      <div className="main-container">
-        <h1>Home Page</h1>
-      </div>
-      <div className="message-container">
-        {loading && <p>Loading...</p>}
-        {error && <p>Error: {error}</p>}
-      </div>
-      <div className="card-container">
-        <ul className="movies-list">
-          {movies.map((movie) => (
-            <li key={movie.id} className="movie-item">
-              {movie.poster_path && (
+    <div className="homepage">
+      {loading && <p>Loading...</p>}
+      {error && <p>Error: {error}</p>}
+
+      {/* 🔥 Trending Movies */}
+      <div className="row-container">
+        <h2 className="section-title">Trending Movies</h2>
+
+        <div className="scroll-wrapper">
+          <button
+            className="scroll-btn left"
+            onClick={() =>
+              movieRef.current.scrollBy({
+                left: -400,
+                behavior: "smooth",
+              })
+            }
+          >
+            ◀
+          </button>
+
+          <div className="horizontal-scroll" ref={movieRef}>
+            {trendingMovies.map((movie) => (
+              <div key={movie.id} className="movie-card">
                 <img
-                  src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
+                  src={`https://image.tmdb.org/t/p/w300${movie.poster_path}`}
                   alt={movie.title}
-                  className="movie-poster"
                 />
-              )}
-              <div className="movie-title">
-                {movie.title} (
-                {movie.release_date
-                  ? movie.release_date.split("-")[0]
-                  : "Unknown"}
-                )
+                <p>{movie.title}</p>
               </div>
-            </li>
-          ))}
-        </ul>
+            ))}
+          </div>
+
+          <button
+            className="scroll-btn right"
+            onClick={() =>
+              movieRef.current.scrollBy({
+                left: 400,
+                behavior: "smooth",
+              })
+            }
+          >
+            ▶
+          </button>
+        </div>
+      </div>
+
+      {/* 📺 Trending TV Shows */}
+      <div className="row-container">
+        <h2 className="section-title">Trending TV Shows</h2>
+
+        <div className="scroll-wrapper">
+          <button
+            className="scroll-btn left"
+            onClick={() =>
+              tvRef.current.scrollBy({
+                left: -400,
+                behavior: "smooth",
+              })
+            }
+          >
+            ◀
+          </button>
+
+          <div className="horizontal-scroll" ref={tvRef}>
+            {trendingTV.map((show) => (
+              <div key={show.id} className="movie-card">
+                <img
+                  src={`https://image.tmdb.org/t/p/w300${show.poster_path}`}
+                  alt={show.name}
+                />
+                <p>{show.name}</p>
+              </div>
+            ))}
+          </div>
+
+          <button
+            className="scroll-btn right"
+            onClick={() =>
+              tvRef.current.scrollBy({
+                left: 400,
+                behavior: "smooth",
+              })
+            }
+          >
+            ▶
+          </button>
+        </div>
       </div>
     </div>
   );
