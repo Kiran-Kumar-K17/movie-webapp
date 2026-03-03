@@ -1,0 +1,10 @@
+/* ============================================================
+   HOME PAGE
+   ============================================================ */
+.homepage {
+  /* No top padding — hero goes full viewport */
+}
+
+.homepage__rows {
+  padding-bottom: var(--sp-2xl);
+}

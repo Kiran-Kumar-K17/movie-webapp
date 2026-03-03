@@ -1,0 +1,235 @@
+/* ============================================================
+   SHARED: MEDIA LIST PAGES (Movies, TV Shows)
+   ============================================================ */
+.media-list-page {
+  padding-bottom: var(--sp-2xl);
+}
+
+.media-list-page__header {
+  padding: var(--sp-xl) 0 var(--sp-md);
+}
+
+.media-list-page__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: var(--clr-text);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 8px;
+}
+
+.title-accent {
+  display: inline-block;
+  width: 5px;
+  height: 1em;
+  background: linear-gradient(to bottom, var(--clr-gold), #b8860b);
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+
+.media-list-page__subtitle {
+  font-size: 0.9rem;
+  color: var(--clr-text-muted);
+  margin-left: 19px;
+}
+
+.media-list-page__filters {
+  margin-bottom: var(--sp-xl);
+}
+
+.media-list-page__sentinel {
+  margin-top: var(--sp-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 60px;
+}
+
+.media-list-page__loader {
+  padding: var(--sp-lg);
+  color: var(--clr-gold);
+}
+
+.media-list-page__end {
+  font-size: 0.85rem;
+  color: var(--clr-text-dim);
+  padding: var(--sp-md);
+  font-style: italic;
+}
+
+.spin-icon {
+  animation: spin 1s linear infinite;
+}
+
+/* ============================================================
+   SEARCH PAGE
+   ============================================================ */
+.search-page {
+  padding-bottom: var(--sp-2xl);
+}
+
+.search-page__header {
+  padding: var(--sp-xl) 0 var(--sp-lg);
+}
+
+.search-page__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  color: var(--clr-text);
+  margin-bottom: 8px;
+}
+
+.search-page__query {
+  color: var(--clr-gold);
+}
+
+.search-page__count {
+  font-size: 0.85rem;
+  color: var(--clr-text-muted);
+  margin-bottom: var(--sp-lg);
+}
+
+.search-page__tabs {
+  display: flex;
+  gap: var(--sp-sm);
+  margin-bottom: var(--sp-xl);
+  border-bottom: 1px solid var(--clr-border);
+  padding-bottom: 0;
+}
+
+.search-page__tab {
+  padding: 10px 20px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--clr-text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  margin-bottom: -1px;
+}
+
+.search-page__tab:hover {
+  color: var(--clr-text);
+}
+
+.search-page__tab.active {
+  color: var(--clr-gold);
+  border-bottom-color: var(--clr-gold);
+}
+
+.search-page__empty {
+  text-align: center;
+  padding: var(--sp-2xl) 0;
+  color: var(--clr-text-muted);
+}
+
+.search-page__empty-icon {
+  font-size: 3rem;
+  margin-bottom: var(--sp-md);
+}
+
+.search-page__empty h3 {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--clr-text);
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   FAVORITES PAGE
+   ============================================================ */
+.favorites-page {
+  padding-bottom: var(--sp-2xl);
+}
+
+.favorites-page__header {
+  padding: var(--sp-xl) 0 var(--sp-lg);
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--sp-md);
+}
+
+.favorites-page__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 900;
+  color: var(--clr-text);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.favorites-page__tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid var(--clr-border);
+  margin-bottom: var(--sp-xl);
+}
+
+.favorites-page__tab {
+  padding: 10px 24px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--clr-text-muted);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  transition: all var(--duration) var(--ease);
+  margin-bottom: -1px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.favorites-page__tab:hover {
+  color: var(--clr-text);
+}
+
+.favorites-page__tab.active {
+  color: var(--clr-gold);
+  border-bottom-color: var(--clr-gold);
+}
+
+.favorites-page__count {
+  background: var(--clr-gold-dim);
+  color: var(--clr-gold);
+  border-radius: var(--r-full);
+  padding: 1px 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.favorites-page__empty {
+  text-align: center;
+  padding: var(--sp-2xl) 0;
+  color: var(--clr-text-muted);
+}
+
+.favorites-page__empty-icon {
+  font-size: 4rem;
+  margin-bottom: var(--sp-md);
+}
+
+.favorites-page__empty h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--clr-text);
+  margin-bottom: 8px;
+}
+
+.favorites-page__empty p {
+  font-size: 0.9rem;
+  max-width: 40ch;
+  margin: 0 auto;
+  line-height: 1.6;
+}
