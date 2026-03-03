@@ -1,0 +1,19 @@
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: black;
+  padding: 10px;
+}
+
+.navbar a {
+  color: white;
+  text-decoration: none;
+}
+
+.search-bar {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
