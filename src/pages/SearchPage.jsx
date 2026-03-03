@@ -3,10 +3,14 @@ import { useLocation } from 'react-router-dom';
 import { searchMulti } from '../api/tmdb';
 import MediaGrid from '../components/ui/MediaGrid';
 import LoadingSkeleton from '../components/ui/LoadingSkeleton';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Search, Film, Tv } from 'lucide-react';
 import './MediaListPage.css';
 
-const TABS = ['All', 'Movies', 'TV Shows'];
+const TABS = [
+  { key: 'All',      label: 'All',      icon: <Search size={13} /> },
+  { key: 'Movies',   label: 'Movies',   icon: <Film size={13} /> },
+  { key: 'TV Shows', label: 'TV Shows', icon: <Tv size={13} /> },
+];
 
 const SearchPage = () => {
   const location = useLocation();
@@ -28,7 +32,7 @@ const SearchPage = () => {
 
   useEffect(() => {
     if (!query || !hasMore || fetchingRef.current) return;
-    const fetch = async () => {
+    const doFetch = async () => {
       try {
         fetchingRef.current = true;
         setLoading(true);
@@ -48,7 +52,7 @@ const SearchPage = () => {
         fetchingRef.current = false;
       }
     };
-    fetch();
+    doFetch();
   }, [query, page, hasMore]);
 
   const observer = useRef(null);
@@ -79,40 +83,40 @@ const SearchPage = () => {
   return (
     <div className="search-page page-wrapper">
       <div className="container">
+        {/* Header */}
         <div className="search-page__header">
           <h1 className="search-page__title">
-            Results for <span className="search-page__query">"{query}"</span>
+            <span className="title-accent" />
+            Results for{' '}
+            <span className="search-page__query">"{query}"</span>
           </h1>
-          {!loading && (
-            <p className="search-page__count">{results.length} results found</p>
+          {!loading && results.length > 0 && (
+            <p className="search-page__count">
+              {results.length} result{results.length !== 1 ? 's' : ''} found
+            </p>
           )}
         </div>
 
+        {/* Filter Tabs */}
         <div className="search-page__tabs">
           {TABS.map((tab) => (
             <button
-              key={tab}
-              className={`search-page__tab ${activeTab === tab ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab)}
+              key={tab.key}
+              className={`search-page__tab ${activeTab === tab.key ? 'active' : ''}`}
+              onClick={() => setActiveTab(tab.key)}
             >
-              {tab}
-              {counts[tab] > 0 && (
-                <span style={{
-                  fontSize: '0.72rem',
-                  background: 'rgba(255,255,255,0.08)',
-                  padding: '1px 6px',
-                  borderRadius: 4,
-                  marginLeft: 4,
-                }}>
-                  {counts[tab]}
-                </span>
+              {tab.icon}
+              {tab.label}
+              {counts[tab.key] > 0 && (
+                <span className="search-page__tab-count">{counts[tab.key]}</span>
               )}
             </button>
           ))}
         </div>
 
+        {/* Results */}
         {filtered.length === 0 && loading ? (
-          <div className="media-grid">
+          <div className="search-results-grid">
             <LoadingSkeleton variant="card" count={12} />
           </div>
         ) : filtered.length === 0 && !loading ? (
@@ -122,14 +126,18 @@ const SearchPage = () => {
             <p>Try a different search term or check your spelling.</p>
           </div>
         ) : (
-          <MediaGrid items={filtered} />
+          <MediaGrid items={filtered} gridClass="search-results-grid" />
         )}
 
+        {/* Infinite scroll sentinel */}
         <div ref={sentinelRef} className="media-list-page__sentinel">
           {loading && results.length > 0 && (
             <div className="media-list-page__loader">
               <Loader2 size={28} className="spin-icon" />
             </div>
+          )}
+          {!hasMore && filtered.length > 0 && (
+            <p className="media-list-page__end">You've seen them all — for now.</p>
           )}
         </div>
       </div>

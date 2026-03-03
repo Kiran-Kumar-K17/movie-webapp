@@ -3,6 +3,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { FavoritesProvider } from './context/FavoritesContext';
 import { ToastProvider } from './context/ToastContext';
 import Navbar from './components/layout/Navbar';
+import Footer from './components/layout/Footer';
+import ScrollToTop from './components/ui/ScrollToTop';
 import HomePage from './pages/HomePage';
 import MoviesPage from './pages/MoviesPage';
 import TvShowsPage from './pages/TvShowsPage';
@@ -31,6 +33,8 @@ const App = () => {
               <Route path="*"           element={<HomePage />} />
             </Routes>
           </main>
+          <Footer />
+          <ScrollToTop />
         </ToastProvider>
       </FavoritesProvider>
     </BrowserRouter>

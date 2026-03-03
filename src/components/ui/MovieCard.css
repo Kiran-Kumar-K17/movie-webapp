@@ -1,32 +1,31 @@
 /* ============================================================
-   MOVIE CARD
+   MOVIE CARD — Premium Glass
    ============================================================ */
 .movie-card {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
   border-radius: var(--r-md);
   overflow: hidden;
   background: var(--clr-surface);
-  cursor: pointer;
-  flex-shrink: 0;
-  width: 160px;
-  transition: transform 0.35s var(--ease), box-shadow 0.35s var(--ease);
+  border: 1px solid var(--clr-border);
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    border-color 0.3s var(--ease);
+  will-change: transform;
 }
 
 .movie-card:hover {
-  transform: translateY(-6px) scale(1.02);
-  box-shadow: var(--shadow-lg);
-  z-index: 2;
+  transform: translateY(-6px) scale(1.015);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(212, 175, 55, 0.25);
+  border-color: rgba(212, 175, 55, 0.2);
 }
 
-/* Grid variant */
-.movie-card--grid {
-  width: 100%;
-}
-
-/* Poster */
+/* ── Poster ── */
 .movie-card__poster-wrap {
   position: relative;
-  aspect-ratio: 2/3;
+  aspect-ratio: 2 / 3;
   overflow: hidden;
   background: var(--clr-surface2);
 }
@@ -39,9 +38,10 @@
 }
 
 .movie-card:hover .movie-card__poster {
-  transform: scale(1.07);
+  transform: scale(1.06);
 }
 
+/* No poster placeholder */
 .movie-card__no-poster {
   width: 100%;
   height: 100%;
@@ -51,86 +51,99 @@
   justify-content: center;
   gap: 8px;
   color: var(--clr-text-dim);
+  background: linear-gradient(135deg, var(--clr-surface) 0%, var(--clr-surface2) 100%);
   font-size: 0.75rem;
 }
 
-/* Rating badge */
+/* Rating Badge */
 .movie-card__rating {
   position: absolute;
   top: 8px;
   left: 8px;
-  background: rgba(0,0,0,0.75);
-  backdrop-filter: blur(8px);
-  border-radius: var(--r-sm);
-  padding: 3px 7px;
-  font-size: 0.72rem;
-  font-weight: 700;
   display: flex;
   align-items: center;
   gap: 3px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--r-full);
+  background: rgba(10, 10, 15, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.3);
   color: var(--clr-gold-light);
-  border: 1px solid rgba(212,175,55,0.3);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  z-index: 2;
 }
 
-/* Action buttons */
+/* Action buttons — top right pill */
 .movie-card__actions {
   position: absolute;
   top: 8px;
   right: 8px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
+  z-index: 2;
   opacity: 0;
-  transition: opacity var(--duration) var(--ease);
+  transform: translateX(8px);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
 }
 
 .movie-card:hover .movie-card__actions {
   opacity: 1;
+  transform: translateX(0);
 }
 
 .movie-card__action-btn {
   width: 30px;
   height: 30px;
   border-radius: var(--r-full);
-  background: rgba(0,0,0,0.7);
-  backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(10, 10, 15, 0.8);
+  backdrop-filter: blur(8px);
   color: var(--clr-text-muted);
-  border: 1px solid rgba(255,255,255,0.1);
   cursor: pointer;
-  transition: all var(--duration) var(--ease);
+  transition: all 0.2s var(--ease);
 }
 
-.movie-card__action-btn:hover,
-.movie-card__action-btn.active {
-  transform: scale(1.15);
+.movie-card__action-btn:hover {
+  transform: scale(1.12);
 }
 
-.movie-card__action-btn.fav.active {
+.movie-card__action-btn.fav.active,
+.movie-card__action-btn.fav:hover {
+  background: rgba(248, 113, 113, 0.2);
+  border-color: rgba(248, 113, 113, 0.4);
   color: #f87171;
-  background: rgba(248,113,113,0.2);
-  border-color: rgba(248,113,113,0.4);
 }
 
-.movie-card__action-btn.watch.active {
-  color: var(--clr-gold);
+.movie-card__action-btn.watch.active,
+.movie-card__action-btn.watch:hover {
   background: var(--clr-gold-dim);
-  border-color: var(--clr-border-glow);
+  border-color: rgba(212, 175, 55, 0.4);
+  color: var(--clr-gold);
 }
 
-/* Overlay on hover */
+/* Hover Overlay */
 .movie-card__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 55%);
-  opacity: 0;
-  transition: opacity 0.35s var(--ease);
+  background: linear-gradient(
+    to top,
+    rgba(10, 10, 15, 0.95) 0%,
+    rgba(10, 10, 15, 0.5) 40%,
+    transparent 70%
+  );
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 12px;
+  padding: 16px 12px 12px;
+  opacity: 0;
+  transition: opacity 0.3s var(--ease);
+  z-index: 1;
 }
 
 .movie-card:hover .movie-card__overlay {
@@ -138,9 +151,8 @@
 }
 
 .movie-card__overlay-title {
-  font-family: var(--font-display);
   font-size: 0.85rem;
-  font-weight: 700;
+  font-weight: 600;
   color: var(--clr-text);
   line-height: 1.3;
   margin-bottom: 4px;
@@ -149,29 +161,36 @@
 .movie-card__overlay-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.72rem;
-  color: var(--clr-text-muted);
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .movie-card__overlay-type {
-  background: var(--clr-gold-dim);
-  color: var(--clr-gold);
-  padding: 1px 6px;
-  border-radius: 3px;
+  font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  padding: 2px 7px;
+  border-radius: var(--r-full);
+  background: var(--clr-gold-dim);
+  color: var(--clr-gold);
+  border: 1px solid rgba(212, 175, 55, 0.2);
 }
 
-/* Bottom info */
+.movie-card__overlay-meta span:not(.movie-card__overlay-type) {
+  font-size: 0.75rem;
+  color: var(--clr-text-muted);
+}
+
+/* Info section below poster */
 .movie-card__info {
-  padding: 10px 10px 12px;
+  padding: 10px 12px 12px;
+  background: var(--clr-surface);
+  flex: 1;
 }
 
 .movie-card__title {
-  font-size: 0.82rem;
+  font-size: 0.875rem;
   font-weight: 600;
   color: var(--clr-text);
   line-height: 1.3;
@@ -181,7 +200,24 @@
 }
 
 .movie-card__year {
-  font-size: 0.72rem;
-  color: var(--clr-text-muted);
+  font-size: 0.75rem;
+  color: var(--clr-text-dim);
   margin-top: 2px;
+}
+
+/* Grid variant */
+.movie-card--grid {
+  min-width: 0;
+}
+
+/* Row variant sizing (inside MediaRow) */
+.media-row__track .movie-card {
+  width: 160px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 540px) {
+  .media-row__track .movie-card {
+    width: 130px;
+  }
 }

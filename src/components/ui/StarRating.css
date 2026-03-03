@@ -4,20 +4,21 @@
 .star-rating {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
 .star-rating__label {
-  font-size: 0.8rem;
-  font-weight: 500;
-  color: var(--clr-text-muted);
-  letter-spacing: 0.3px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--clr-text-dim);
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .star-rating__stars {
   display: flex;
   gap: 4px;
+  align-items: center;
 }
 
 .star-rating__star {
@@ -25,61 +26,28 @@
   border: none;
   cursor: pointer;
   color: var(--clr-surface2);
-  padding: 2px;
-  border-radius: 3px;
-  transition: color var(--duration) var(--ease), transform 0.15s var(--ease);
+  padding: 3px;
+  border-radius: 4px;
+  transition: color 0.18s var(--ease), transform 0.15s var(--ease), filter 0.18s var(--ease);
   line-height: 0;
 }
 
 .star-rating__star:hover,
 .star-rating__star.filled {
   color: var(--clr-gold);
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.5));
 }
 
 .star-rating__star:hover {
-  transform: scale(1.2);
+  transform: scale(1.25);
 }
 
-/* ============================================================
-   GENRE FILTER
-   ============================================================ */
-.genre-filter {
-  display: flex;
-  gap: var(--sp-sm);
-  overflow-x: auto;
-  padding: 0 0 8px;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+.star-rating__star.filled:not(:hover) {
+  filter: drop-shadow(0 0 4px rgba(212, 175, 55, 0.3));
 }
 
-.genre-filter::-webkit-scrollbar {
-  display: none;
-}
-
-.genre-filter__pill {
-  flex-shrink: 0;
-  padding: 7px 18px;
-  border-radius: var(--r-full);
-  border: 1px solid var(--clr-border);
-  background: transparent;
+.star-rating__value {
+  font-size: 0.8rem;
   color: var(--clr-text-muted);
-  font-family: var(--font-body);
-  font-size: 0.82rem;
-  font-weight: 500;
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all var(--duration) var(--ease);
-}
-
-.genre-filter__pill:hover {
-  border-color: rgba(212,175,55,0.4);
-  color: var(--clr-text);
-  background: var(--clr-gold-dim);
-}
-
-.genre-filter__pill.active {
-  background: var(--clr-gold);
-  color: #0a0a0f;
-  border-color: var(--clr-gold);
-  font-weight: 600;
+  margin-left: 4px;
 }

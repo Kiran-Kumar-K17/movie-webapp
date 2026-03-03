@@ -1,35 +1,43 @@
 /* ============================================================
-   SKELETONS
+   LOADING SKELETON — Wave Shimmer
    ============================================================ */
-.skeleton {
-  background: linear-gradient(
-    90deg,
-    var(--clr-surface2) 0%,
-    rgba(255,255,255,0.04) 50%,
-    var(--clr-surface2) 100%
-  );
-  background-size: 400px 100%;
-  animation: shimmer 1.5s infinite linear;
-  border-radius: var(--r-sm);
+@keyframes wave {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
 }
 
-/* Card skeleton */
+.skeleton {
+  border-radius: var(--r-sm);
+  background: linear-gradient(
+    90deg,
+    var(--clr-surface) 25%,
+    var(--clr-surface2) 50%,
+    var(--clr-surface) 75%
+  );
+  background-size: 1200px 100%;
+  animation: wave 1.6s linear infinite;
+}
+
+/* ── Card variant ── */
 .skeleton-card {
-  width: 160px;
-  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
   border-radius: var(--r-md);
   overflow: hidden;
   background: var(--clr-surface);
+  border: 1px solid var(--clr-border);
+  width: 160px;
+  flex-shrink: 0;
 }
 
 .skeleton--poster {
-  aspect-ratio: 2/3;
   width: 100%;
+  aspect-ratio: 2 / 3;
   border-radius: 0;
 }
 
 .skeleton-card__info {
-  padding: 10px;
+  padding: 10px 12px 12px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -40,101 +48,73 @@
   border-radius: 4px;
 }
 
-.skeleton--line-full { width: 85%; }
-.skeleton--line-half { width: 50%; }
+.skeleton--line-full { width: 100%; }
+.skeleton--line-half { width: 55%; }
 
-/* Hero skeleton */
+/* ── Hero variant ── */
 .skeleton-hero {
   width: 100%;
+  min-height: 100svh;
 }
 
 .skeleton--hero-img {
   width: 100%;
-  height: 85vh;
+  height: 100%;
+  min-height: 100svh;
   border-radius: 0;
+  background: linear-gradient(
+    90deg,
+    var(--clr-surface) 25%,
+    #1c1c2a 50%,
+    var(--clr-surface) 75%
+  );
+  background-size: 1200px 100%;
+  animation: wave 1.8s linear infinite;
 }
 
-/* Detail skeleton */
+/* ── Detail variant ── */
 .skeleton-detail {
   padding-top: var(--nav-h);
+  min-height: 100vh;
 }
 
 .skeleton--detail-backdrop {
   width: 100%;
-  height: 70vh;
+  height: 45vh;
   border-radius: 0;
+  background: linear-gradient(
+    90deg,
+    var(--clr-surface) 25%,
+    #1c1c2a 50%,
+    var(--clr-surface) 75%
+  );
+  background-size: 1200px 100%;
+  animation: wave 1.8s linear infinite;
 }
 
 .skeleton-detail__info {
   padding: var(--sp-xl) var(--content-pad);
-}
-
-/* Toast container */
-.toast-container {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  pointer-events: none;
+  gap: 16px;
+  max-width: var(--max-w);
+  margin: 0 auto;
 }
 
-.toast {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
-  border-radius: var(--r-md);
-  background: var(--clr-surface2);
-  border: 1px solid var(--clr-border);
-  backdrop-filter: blur(16px);
-  min-width: 240px;
-  max-width: 340px;
-  pointer-events: all;
-  animation: fadeUp 0.3s var(--ease) both;
-  box-shadow: var(--shadow-md);
+/* ── Grid of skeletons ── */
+.media-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--sp-md);
+  padding: var(--sp-md) 0;
 }
 
-.toast--success {
-  border-color: rgba(74, 222, 128, 0.3);
-  background: rgba(16, 30, 20, 0.9);
+.media-grid .skeleton-card {
+  width: 100%;
 }
 
-.toast--error {
-  border-color: rgba(248, 113, 113, 0.3);
-  background: rgba(30, 16, 16, 0.9);
-}
-
-.toast--info {
-  border-color: var(--clr-border);
-}
-
-.toast__icon {
-  flex-shrink: 0;
-}
-
-.toast--success .toast__icon { color: var(--clr-rating-hi); }
-.toast--error   .toast__icon { color: var(--clr-rating-lo); }
-.toast--info    .toast__icon { color: var(--clr-text-muted); }
-
-.toast__message {
-  font-size: 0.85rem;
-  color: var(--clr-text);
-  line-height: 1.4;
-  flex: 1;
-}
-
-.toast__close {
-  flex-shrink: 0;
-  color: var(--clr-text-muted);
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  transition: color var(--duration) var(--ease);
-}
-
-.toast__close:hover {
-  color: var(--clr-text);
+@media (max-width: 540px) {
+  .skeleton-card {
+    width: 130px;
+  }
 }

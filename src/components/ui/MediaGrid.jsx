@@ -1,10 +1,9 @@
 import React from 'react';
 import MovieCard from './MovieCard';
-import './MediaRow.css';
 
-const MediaGrid = ({ items = [], mediaType }) => {
+const MediaGrid = ({ items = [], mediaType, gridClass = 'media-grid' }) => {
   return (
-    <div className="media-grid">
+    <div className={gridClass}>
       {items.map((item) => (
         <MovieCard
           key={item.id}

@@ -1,5 +1,5 @@
 import React from 'react';
-import './StarRating.css';
+import './GenreFilter.css';
 
 const GenreFilter = ({ genres = [], activeId, onChange }) => {
   return (
